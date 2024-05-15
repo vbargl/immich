@@ -53,8 +53,7 @@ const truncateMap: Record<TimeBucketSize, string> = {
 };
 
 const dateTrunc = (options: TimeBucketOptions) =>
-  `(date_trunc('${
-    truncateMap[options.size]
+  `(date_trunc('${truncateMap[options.size]
   }', (asset."localDateTime" at time zone 'UTC')) at time zone 'UTC')::timestamptz`;
 
 @Instrumentation()
@@ -67,7 +66,7 @@ export class AssetRepository implements IAssetRepository {
     @InjectRepository(SmartInfoEntity) private smartInfoRepository: Repository<SmartInfoEntity>,
     @InjectRepository(PartnerEntity) private partnerRepository: Repository<PartnerEntity>,
     @InjectRepository(AlbumEntity) private albumRepository: Repository<AlbumEntity>,
-  ) {}
+  ) { }
 
   async upsertExif(exif: Partial<ExifEntity>): Promise<void> {
     await this.exifRepository.upsert(exif, { conflictPaths: ['assetId'] });
@@ -673,7 +672,7 @@ export class AssetRepository implements IAssetRepository {
   }
 
   private getBuilder(options: AssetBuilderOptions) {
-    const { isArchived, isFavorite, isTrashed, albumId, personId, userIds, withStacked, exifInfo, assetType } = options;
+    const { isArchived, isFavorite, isTrashed, albumId, personId, userIds, withStacked, exifInfo, assetType, withoutAlbum } = options;
 
     const builder = this.repository.createQueryBuilder('asset').where('asset.isVisible = true');
     if (assetType !== undefined) {
@@ -724,6 +723,10 @@ export class AssetRepository implements IAssetRepository {
       builder.andWhere(
         new Brackets((qb) => qb.where('stack.primaryAssetId = asset.id').orWhere('asset.stackId IS NULL')),
       );
+    }
+
+    if (withoutAlbum) {
+      builder.andWhere('NOT EXISTS (SELECT 1 FROM albums_assets_assets WHERE "assetsId" = asset.id)', { specificId: '87e0f1ef-0dde-4206-bdc4-4b078e136d81' });
     }
 
     return builder;

@@ -181,15 +181,16 @@ export class AssetStore {
     this.emit(true);
   }, 2500);
 
-  async init(viewport: Viewport) {
+  async reset(viewport: Viewport, newOptions: Partial<AssetStoreOptions> = {}) {
     this.initialized = false;
     this.timelineHeight = 0;
     this.buckets = [];
     this.assets = [];
     this.assetToBucket = {};
     this.albumAssets = new Set();
+    this.options = { ...this.options, ...newOptions };
 
-    const timebuckets = await getTimeBuckets({
+    let timebuckets = await getTimeBuckets({
       ...this.options,
       key: getKey(),
     });

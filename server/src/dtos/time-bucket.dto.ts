@@ -34,6 +34,9 @@ export class TimeBucketDto {
   @ValidateBoolean({ optional: true })
   withPartners?: boolean;
 
+  @ValidateBoolean({ optional: true })
+  withoutAlbum?: boolean;
+
   @IsEnum(AssetOrder)
   @Optional()
   @ApiProperty({ enum: AssetOrder, enumName: 'AssetOrder' })

@@ -17,12 +17,12 @@ void main() {
   // final instance = TimelineApi();
 
   group('tests for TimelineApi', () {
-    //Future<List<AssetResponseDto>> getTimeBucket(TimeBucketSize size, String timeBucket, { String albumId, bool isArchived, bool isFavorite, bool isTrashed, String key, AssetOrder order, String personId, String userId, bool withPartners, bool withStacked }) async
+    //Future<List<AssetResponseDto>> getTimeBucket(TimeBucketSize size, String timeBucket, { String albumId, bool isArchived, bool isFavorite, bool isTrashed, String key, AssetOrder order, String personId, String userId, bool withPartners, bool withStacked, bool withoutAlbum }) async
     test('test getTimeBucket', () async {
       // TODO
     });
 
-    //Future<List<TimeBucketResponseDto>> getTimeBuckets(TimeBucketSize size, { String albumId, bool isArchived, bool isFavorite, bool isTrashed, String key, AssetOrder order, String personId, String userId, bool withPartners, bool withStacked }) async
+    //Future<List<TimeBucketResponseDto>> getTimeBuckets(TimeBucketSize size, { String albumId, bool isArchived, bool isFavorite, bool isTrashed, String key, AssetOrder order, String personId, String userId, bool withPartners, bool withStacked, bool withoutAlbum }) async
     test('test getTimeBuckets', () async {
       // TODO
     });
