@@ -66,6 +66,17 @@ export const videoViewerVolume = persisted<number>('video-viewer-volume', 1, {})
 
 export const isShowDetail = persisted<boolean>('info-opened', false, {});
 
+
+export interface SidebarSettings {
+  people: boolean;
+  sharing: boolean;
+}
+
+export const sidebarSettings = persisted<SidebarSettings>('sidebar-settings-1', {
+  people: false,
+  sharing: true,
+});
+
 export interface AlbumViewSettings {
   view: string;
   filter: string;
@@ -78,16 +89,6 @@ export interface AlbumViewSettings {
     [group: string]: string[];
   };
 }
-
-export interface SidebarSettings {
-  people: boolean;
-  sharing: boolean;
-}
-
-export const sidebarSettings = persisted<SidebarSettings>('sidebar-settings-1', {
-  people: false,
-  sharing: true,
-});
 
 export enum SortOrder {
   Asc = 'asc',
@@ -128,6 +129,19 @@ export const albumViewSettings = persisted<AlbumViewSettings>('album-view-settin
   sortBy: AlbumSortBy.MostRecentPhoto,
   sortOrder: SortOrder.Desc,
   collapsedGroups: {},
+});
+
+export interface AssetViewSettings {
+  filter: string;
+}
+
+export enum AssetFilter {
+  All = 'All',
+  WithoutAlbum = 'WithoutAlbum',
+}
+
+export const assetViewSettings = persisted<AssetViewSettings>('asset-view-settings', {
+  filter: AssetFilter.All
 });
 
 export const showDeleteModal = persisted<boolean>('delete-confirm-dialog', true, {});
