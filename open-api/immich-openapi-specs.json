@@ -6333,6 +6333,14 @@
             "schema": {
               "type": "boolean"
             }
+          },
+          {
+            "name": "withoutAlbum",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
           }
         ],
         "responses": {
@@ -6455,6 +6463,14 @@
           },
           {
             "name": "withStacked",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "withoutAlbum",
             "required": false,
             "in": "query",
             "schema": {

@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { onMount, onDestroy } from 'svelte';
+  import { get } from 'svelte/store';
   import { afterNavigate, goto, onNavigate } from '$app/navigation';
   import AlbumDescription from '$lib/components/album-page/album-description.svelte';
   import AlbumOptions from '$lib/components/album-page/album-options.svelte';
@@ -37,6 +39,7 @@
   import { createAssetInteractionStore } from '$lib/stores/asset-interaction.store';
   import { assetViewingStore } from '$lib/stores/asset-viewing.store';
   import { AssetStore } from '$lib/stores/assets.store';
+  import { assetViewSettings, locale, AssetFilter } from '$lib/stores/preferences.store';
   import { SlideshowNavigation, SlideshowState, slideshowStore } from '$lib/stores/slideshow.store';
   import { user } from '$lib/stores/user.store';
   import { handlePromiseError } from '$lib/utils';
@@ -80,6 +83,13 @@
   import { t } from 'svelte-i18n';
 
   export let data: PageData;
+
+  const originalAssetFilter = get(assetViewSettings).filter;
+  assetViewSettings.set({ filter: AssetFilter.All });
+
+  onDestroy(() => {
+    assetViewSettings.set({ filter: originalAssetFilter });
+  });
 
   let { isViewing: showAssetViewer, setAsset } = assetViewingStore;
   let { slideshowState, slideshowNavigation } = slideshowStore;
