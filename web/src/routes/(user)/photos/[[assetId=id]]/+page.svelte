@@ -11,6 +11,7 @@
   import FavoriteAction from '$lib/components/photos-page/actions/favorite-action.svelte';
   import StackAction from '$lib/components/photos-page/actions/stack-action.svelte';
   import SelectAllAssets from '$lib/components/photos-page/actions/select-all-assets.svelte';
+  import AssetControls from '$lib/components/photos-page/asset-controls.svelte';
   import AssetGrid from '$lib/components/photos-page/asset-grid.svelte';
   import AssetSelectContextMenu from '$lib/components/photos-page/asset-select-context-menu.svelte';
   import AssetSelectControlBar from '$lib/components/photos-page/asset-select-control-bar.svelte';
@@ -24,9 +25,16 @@
   import { mdiDotsVertical, mdiPlus } from '@mdi/js';
   import { preferences, user } from '$lib/stores/user.store';
   import { t } from 'svelte-i18n';
+  import { AssetFilter, assetViewSettings } from '$lib/stores/preferences.store';
 
   let { isViewing: showAssetViewer } = assetViewingStore;
-  const assetStore = new AssetStore({ isArchived: false, withStacked: true, withPartners: true });
+  const assetStore = new AssetStore({
+    isArchived: false,
+    withStacked: true,
+    withPartners: true,
+    withoutAlbum: $assetViewSettings.filter === AssetFilter.WithoutAlbum,
+  });
+
   const assetInteractionStore = createAssetInteractionStore();
   const { isMultiSelectState, selectedAssets } = assetInteractionStore;
 
@@ -82,7 +90,11 @@
   </AssetSelectControlBar>
 {/if}
 
-<UserPageLayout hideNavbar={$isMultiSelectState} showUploadButton scrollbar={false}>
+<UserPageLayout title="Photos" hideNavbar={$isMultiSelectState} showUploadButton scrollbar={false}>
+  <div class="flex place-items-center gap-2" slot="buttons">
+    <AssetControls />
+  </div>
+
   <AssetGrid
     {assetStore}
     {assetInteractionStore}

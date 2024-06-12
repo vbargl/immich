@@ -1,3 +1,4 @@
+import { without } from 'lodash';
 import { AssetOrder } from 'src/entities/album.entity';
 import { AssetJobStatusEntity } from 'src/entities/asset-job-status.entity';
 import { AssetEntity, AssetType } from 'src/entities/asset.entity';
@@ -54,6 +55,7 @@ export interface AssetBuilderOptions {
   withStacked?: boolean;
   exifInfo?: boolean;
   assetType?: AssetType;
+  withoutAlbum?: boolean;
 }
 
 export interface TimeBucketOptions extends AssetBuilderOptions {

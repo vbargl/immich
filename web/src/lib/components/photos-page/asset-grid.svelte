@@ -4,7 +4,7 @@
   import type { AssetInteractionStore } from '$lib/stores/asset-interaction.store';
   import { assetViewingStore } from '$lib/stores/asset-viewing.store';
   import { BucketPosition, isSelectingAllAssets, type AssetStore, type Viewport } from '$lib/stores/assets.store';
-  import { locale, showDeleteModal } from '$lib/stores/preferences.store';
+  import { AssetFilter, assetViewSettings, locale, showDeleteModal } from '$lib/stores/preferences.store';
   import { isSearchEnabled } from '$lib/stores/search.store';
   import { featureFlags } from '$lib/stores/server-config.store';
   import { deleteAssets } from '$lib/utils/actions';
@@ -59,12 +59,19 @@
     void assetStore.updateViewport(viewport);
   }
 
+  const storeDisconnect = assetViewSettings.subscribe((settings) => {
+    console.log('change');
+    assetStore.reset(viewport, {
+      withoutAlbum: settings.filter === AssetFilter.WithoutAlbum,
+    });
+  });
+
   const dispatch = createEventDispatcher<{ select: AssetResponseDto; escape: void }>();
 
   onMount(async () => {
     showSkeleton = false;
     assetStore.connect();
-    await assetStore.init(viewport);
+    assetStore.reset(viewport);
   });
 
   onDestroy(() => {
@@ -73,6 +80,7 @@
     }
 
     assetStore.disconnect();
+    storeDisconnect();
   });
 
   const trashOrDelete = async (force: boolean = false) => {

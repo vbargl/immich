@@ -2711,7 +2711,7 @@ export function tagAssets({ id, assetIdsDto }: {
         body: assetIdsDto
     })));
 }
-export function getTimeBucket({ albumId, isArchived, isFavorite, isTrashed, key, order, personId, size, timeBucket, userId, withPartners, withStacked }: {
+export function getTimeBucket({ albumId, isArchived, isFavorite, isTrashed, key, order, personId, size, timeBucket, userId, withPartners, withStacked, withoutAlbum }: {
     albumId?: string;
     isArchived?: boolean;
     isFavorite?: boolean;
@@ -2724,6 +2724,7 @@ export function getTimeBucket({ albumId, isArchived, isFavorite, isTrashed, key,
     userId?: string;
     withPartners?: boolean;
     withStacked?: boolean;
+    withoutAlbum?: boolean;
 }, opts?: Oazapfts.RequestOpts) {
     return oazapfts.ok(oazapfts.fetchJson<{
         status: 200;
@@ -2740,12 +2741,13 @@ export function getTimeBucket({ albumId, isArchived, isFavorite, isTrashed, key,
         timeBucket,
         userId,
         withPartners,
-        withStacked
+        withStacked,
+        withoutAlbum
     }))}`, {
         ...opts
     }));
 }
-export function getTimeBuckets({ albumId, isArchived, isFavorite, isTrashed, key, order, personId, size, userId, withPartners, withStacked }: {
+export function getTimeBuckets({ albumId, isArchived, isFavorite, isTrashed, key, order, personId, size, userId, withPartners, withStacked, withoutAlbum }: {
     albumId?: string;
     isArchived?: boolean;
     isFavorite?: boolean;
@@ -2757,6 +2759,7 @@ export function getTimeBuckets({ albumId, isArchived, isFavorite, isTrashed, key
     userId?: string;
     withPartners?: boolean;
     withStacked?: boolean;
+    withoutAlbum?: boolean;
 }, opts?: Oazapfts.RequestOpts) {
     return oazapfts.ok(oazapfts.fetchJson<{
         status: 200;
@@ -2772,7 +2775,8 @@ export function getTimeBuckets({ albumId, isArchived, isFavorite, isTrashed, key
         size,
         userId,
         withPartners,
-        withStacked
+        withStacked,
+        withoutAlbum
     }))}`, {
         ...opts
     }));
